@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app          # It tells Docker to replace the /app folder inside the container with  the actual folder on your Arch Linux machine.
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+    stdin_open: true
+    tty: true

@@ -1,0 +1,19 @@
+1. dockerfile has cmd to run so what they do if dockerfile is just for building image?
+2. where r these docker images? 
+3. so this dcker images has everthing os , django , python , my project code ? how it has os? is it all virtual like virtuall machine and if yes then what os it got ?
+4. so this docker image is running on my host machine ? if project is in docker virtual image which has its own os then how it is running on my host machine ?
+5. if images has its won file then wont database will get seperate? image will have its
+  own sqlite db so when i do some data get or post then wont it get into image db not in
+  my local db? yes local
+
+  warning --- u r doing things with antigravity so there's many things which is necessary to learn later on 
+
+  docker ---
+  1. learn to write dockerfile Configuration files
+
+  ci/cd ----
+  1. learn to write github actions ci-cd.yml  Configuration files
+
+  notes --
+1. sudo docker exec -it django_tutorial-web-1 bash ----- to get into specific container
+2. windows docker desktop uses WSL2 as backend for running docker containers as it requires linux kernel
