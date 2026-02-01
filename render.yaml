@@ -2,7 +2,6 @@ services:
   - type: web
     name: django-polls
     env: docker
-    startCommand: "gunicorn mysite.wsgi:application" # This is optional if defined in Dockerfile
     envVars:
       - key: DEBUG
         value: "False"
