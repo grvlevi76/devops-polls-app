@@ -8,14 +8,6 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    pkg-config \
-    libdbus-1-dev \
-    libglib2.0-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install dependencies
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
@@ -23,8 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . /app/
 
-# Expose the port the app runs on
-EXPOSE 8000
+# EXPOSE the port Render uses (can be anything, Render binds to what you EXPOSE)
+EXPOSE 10000
 
-# Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the application using Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "mysite.wsgi:application"]

@@ -20,4 +20,7 @@ sqlparse==0.5.3
 stevedore==5.4.0
 tqdm==4.67.1
 urllib3==2.6.3
-wheel==0.45.1
+wheel==0.45.1gunicorn==23.0.0
+whitenoise==6.7.0
+dj-database-url==2.2.0
+psycopg2-binary==2.9.10

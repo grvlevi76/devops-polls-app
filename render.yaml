@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: django-polls
+    env: docker
+    startCommand: "gunicorn mysite.wsgi:application" # This is optional if defined in Dockerfile
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: polls-db
+          property: connectionString
+      - key: ALLOWED_HOSTS
+        value: "*" # Change this to your domain later
+
+databases:
+  - name: polls-db
+    plan: free
