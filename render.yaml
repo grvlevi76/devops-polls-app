@@ -12,7 +12,7 @@ services:
           name: polls-db
           property: connectionString
       - key: ALLOWED_HOSTS
-        value: "*" # Change this to your domain later
+        value: "https://devops-polls-app.onrender.com" # Change this to your domain later
 
 databases:
   - name: polls-db
