@@ -15,7 +15,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-*zi)ovca18j_dj$p%+ikz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host != '*']
+if not CSRF_TRUSTED_ORIGINS and '*' not in ALLOWED_HOSTS:
+    # Fallback if ALLOWED_HOSTS is specifically set but we need the exact origin
+    CSRF_TRUSTED_ORIGINS = [os.environ.get('RENDER_EXTERNAL_URL')] if os.environ.get('RENDER_EXTERNAL_URL') else []
 
 
 # Application definition
