@@ -25,5 +25,5 @@ RUN SECRET_KEY=dummy python manage.py collectstatic --noinput
 # EXPOSE the port Render uses
 EXPOSE 10000
 
-# Run the application using Gunicorn, but run migrations first
-CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:10000 mysite.wsgi:application"]
+# Run the application using Gunicorn, but run migrations and admin setup first
+CMD ["sh", "-c", "python manage.py migrate && python create_admin.py && gunicorn --bind 0.0.0.0:10000 mysite.wsgi:application"]
