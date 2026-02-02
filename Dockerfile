@@ -15,8 +15,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . /app/
 
-# EXPOSE the port Render uses (can be anything, Render binds to what you EXPOSE)
+# Create staticfiles directory (optional but good practice)
+RUN mkdir -p /app/staticfiles
+
+# Collect static files during build
+# We set a dummy SECRET_KEY if none exists to avoid Django errors
+RUN SECRET_KEY=dummy python manage.py collectstatic --noinput
+
+# EXPOSE the port Render uses
 EXPOSE 10000
 
-# Run the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "mysite.wsgi:application"]
+# Run the application using Gunicorn, but run migrations first
+CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:10000 mysite.wsgi:application"]
