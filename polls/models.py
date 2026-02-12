@@ -22,13 +22,13 @@ class Choice(models.Model):     #choice is module
     def __str__(self):
         return self.choice_text
 
-class Student(models.Model):         #its for testing so delete it later on
-    roll_no= models.IntegerField(default=0)
-    name = models.CharField(max_length=50)
-    Pass = models.BooleanField(default = True)
 
+
+class random(models.Model):                   #for  testing
+    data = models.CharField(max_length=10)
+    data_no = models.IntegerField(default=1)
     def __str__(self):
-        return self.name
+        return self.data
     
 
 
