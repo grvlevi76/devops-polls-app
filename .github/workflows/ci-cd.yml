@@ -42,3 +42,24 @@ jobs:
       run: |
         docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/devops-polls-app:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-polls-app:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/devops-polls-app:latest
+          docker stop my-polls-app || true
+          docker rm my-polls-app || true
+          docker run -d \
+            -p 80:10000 \
+            --name my-polls-app \
+            -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            ${{ secrets.DOCKERHUB_USERNAME }}/devops-polls-app:latest
